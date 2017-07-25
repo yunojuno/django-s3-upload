@@ -5,6 +5,7 @@ from boto.s3.connection import S3Connection
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_protect
 
 from .utils import create_upload_data, get_s3upload_destinations
 
@@ -108,3 +109,37 @@ def get_upload_params(request):
     }
 
     return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+@require_POST
+@csrf_protect
+def get_download_link(request, bucket, key):
+    """
+    Generate and return a secure download link for a file.
+
+    This uses a POST so that we can use CSRF to prevent unauthorised
+    users from calling the view. There is nothing _in_ the form,
+    it's just piggy-backing off the framework. From the docs:
+
+    > using the decorator multiple times is harmless and efficient.
+
+    """
+    print(bucket, key)
+    return HttpResponse()
+    c = S3Connection(
+        settings.AWS_ACCESS_KEY_ID,
+        settings.AWS_SECRET_ACCESS_KEY
+    )
+    url = c.generate_url(
+        expires_in=int(60),
+        method='GET',
+        bucket=bucket,
+        key=key,
+        query_auth=True,
+        force_http=True
+    )
+    return HttpResponse(
+        json.dumps({"url": url}),
+        content_type="application/json",
+        status=201  # because we have created a new link
+    )

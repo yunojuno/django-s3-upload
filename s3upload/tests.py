@@ -13,7 +13,7 @@ from .utils import remove_signature
 
 
 HTML_OUTPUT = (
-    '<div class="s3upload" data-policy-url="/get_upload_params/">\n'
+    '<div class="s3upload" data-policy-url="/upload/">\n'
     '  <a class="s3upload__file-link" target="_blank" href=""></a>\n'
     '  <a class="s3upload__file-remove" href="#remove">Remove</a>\n'
     '  <input class="s3upload__file-url" type="hidden" value="" id="" name="filename" />\n'
@@ -51,10 +51,16 @@ class WidgetTest(TestCase):
             widgets.S3UploadWidget('foo')
 
     def test_check_urls(self):
+        # upload
         reversed_url = reverse('s3upload')
-        resolved_url = resolve('/get_upload_params/')
-        self.assertEqual(reversed_url, '/get_upload_params/')
+        resolved_url = resolve('/upload/')
+        self.assertEqual(reversed_url, '/upload/')
         self.assertEqual(resolved_url.view_name, 's3upload')
+        # download
+        reversed_url = reverse('s3download', kwargs=dict(bucket='foo', key='bar/baz.png'))
+        resolved_url = resolve('/download/foo/bar/baz.png')
+        self.assertEqual(reversed_url, '/download/foo/bar/baz.png')
+        self.assertEqual(resolved_url.view_name, 's3download')
 
     @override_settings(S3UPLOAD_DESTINATIONS={'foo': {}})
     def test_check_widget_html(self):
@@ -190,3 +196,11 @@ class UtilsTest(TestCase):
 
         test_4 = remove_signature("{0}?Signature=1&Expires=2&AWSAccessKeyId=3&t=1&s=2".format(test_url))  # noqa
         self.assertEqual(test_4, "{0}?t=1&s=2".format(test_url))
+
+
+class ViewTests(TestCase):
+
+    def test_get_download_link(self):
+        url = reverse('s3download', kwargs={"bucket": "foo", "key": "bar.png"})
+        request = self.client.post(url)
+        # TODO: implementation

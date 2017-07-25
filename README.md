@@ -4,7 +4,7 @@ django-s3-upload
 Upload files directly to S3 from Django
 -------------------------------------
 
-[![Build Status](https://travis-ci.org/yunojuno/django-s3upload.svg?branch=master)](https://travis-ci.org/yunojuno/django-s3upload)
+[![Build Status](https://travis-ci.org/yunojuno/django-s3-upload.svg?branch=master)](https://travis-ci.org/yunojuno/django-s3-upload)
 
 Add direct uploads to AWS S3 functionality with a progress bar to file input fields.
 
