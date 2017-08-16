@@ -12,10 +12,6 @@ from urllib.parse import urlparse, unquote, parse_qs, urlencode
 from django.conf import settings
 
 
-class KeyNotFoundException(Exception):
-    pass
-
-
 def get_at(index, t):
     try:
         value = t[index]
