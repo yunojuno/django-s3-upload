@@ -36,6 +36,7 @@ class S3UploadWidget(widgets.TextInput):
             )
         self.acl = settings.S3UPLOAD_DESTINATIONS[dest].get('acl', 'public-read')
         self.dest = dest
+        self.instruction_text = kwargs.pop("instruction_text", None)
         super(S3UploadWidget, self).__init__(**kwargs)
 
     def get_file_url(self, value):
@@ -63,6 +64,7 @@ class S3UploadWidget(widgets.TextInput):
             'dest': self.dest,
             'file_url': self.get_file_url(value),
             'name': name,
-            'element_id': self.get_attr(attrs, 'style'),
+            'style': self.get_attr(attrs, 'style'),
+            'instruction_text': self.instruction_text,
         })
         return mark_safe(output)

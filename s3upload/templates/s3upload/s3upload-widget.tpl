@@ -1,4 +1,5 @@
 <div class="s3upload" data-policy-url="{{ policy_url }}">
+  {% if instruction_text %}<p>{{ instruction_text }}</p>{% endif %}
   <a class="s3upload__file-link" target="_blank" href="{{ file_url }}">{{ file_name }}</a>
   <a class="s3upload__file-remove" href="#remove">Remove</a>
   <input class="s3upload__file-url" type="hidden" value="{{ file_url }}" id="{{ element_id }}" name="{{ name }}" />

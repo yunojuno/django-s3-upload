@@ -4,7 +4,7 @@ from s3upload.widgets import S3UploadWidget
 
 
 class S3UploadForm(forms.Form):
-    misc = forms.URLField(widget=S3UploadWidget(dest='misc'))
+    misc = forms.URLField(widget=S3UploadWidget(dest='misc', instruction_text="Choose a file with any MIME type"))
 
 
 class S3UploadMultiForm(forms.Form):
