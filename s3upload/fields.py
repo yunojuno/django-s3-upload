@@ -9,7 +9,10 @@ class S3UploadField(Field):
     def __init__(self, dest=None, *args, **kwargs):
         assert dest, "S3UploadField must be initialised with a destination"
         self.dest = dest
-        self.widget = S3UploadWidget(self.dest)
+        self.widget = S3UploadWidget(
+            self.dest,
+            instruction_text=kwargs.pop("instruction_text", None),
+        )
         super(S3UploadField, self).__init__(*args, **kwargs)
 
     def deconstruct(self):
