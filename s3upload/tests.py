@@ -59,7 +59,6 @@ class WidgetTest(TestCase):
     @override_settings(S3UPLOAD_DESTINATIONS={'foo': {}})
     def test_check_widget_html(self):
         widget = widgets.S3UploadWidget(dest='foo')
-        print(widget.render('filename', None))
         self.assertEqual(widget.render('filename', None), HTML_OUTPUT)
 
     def test_check_signing_logged_in(self):
