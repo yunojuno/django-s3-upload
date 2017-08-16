@@ -13,7 +13,7 @@ from .utils import remove_signature
 
 
 HTML_OUTPUT = (
-    '<div class="s3upload" data-policy-url="/get_upload_params/">\n'
+    '<div class="s3upload" data-policy-url="/get_upload_params/">\n\n'
     '  <a class="s3upload__file-link" target="_blank" href=""></a>\n'
     '  <a class="s3upload__file-remove" href="#remove">Remove</a>\n'
     '  <input class="s3upload__file-url" type="hidden" value="" id="" name="filename" />\n'
@@ -59,6 +59,7 @@ class WidgetTest(TestCase):
     @override_settings(S3UPLOAD_DESTINATIONS={'foo': {}})
     def test_check_widget_html(self):
         widget = widgets.S3UploadWidget(dest='foo')
+        print(widget.render('filename', None))
         self.assertEqual(widget.render('filename', None), HTML_OUTPUT)
 
     def test_check_signing_logged_in(self):
