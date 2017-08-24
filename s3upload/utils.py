@@ -172,9 +172,9 @@ def get_s3_path_from_url(url, bucket_name=settings.AWS_STORAGE_BUCKET_NAME):
 
 
 def get_signed_download_url(
-        key,
-        bucket_name=settings.AWS_STORAGE_BUCKET_NAME,
-        ttl=60,  # 60 seconds should be plenty for a redirected URL to load
+    key,
+    bucket_name=settings.AWS_STORAGE_BUCKET_NAME,
+    ttl=60,  # 60 seconds should be plenty for a redirected URL to load
 ):
     conn = S3Connection(
         settings.AWS_ACCESS_KEY_ID,
