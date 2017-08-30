@@ -40,18 +40,17 @@ class S3UploadWidget(widgets.TextInput):
 
     def get_file_url(self, value):
         if value:
-            path = get_s3_path_from_url(value)
             bucket_name = settings.S3UPLOAD_DESTINATIONS[self.dest].get(
                 'bucket', settings.AWS_STORAGE_BUCKET_NAME
             )
             if self.acl == 'private':
                 return get_signed_download_url(
-                    path,
+                    value,
                     bucket_name,
                 )
             else:
                 # Default to virtual-hosted–style URL
-                return "https://{0}.s3.amazonaws.com{1}/".format(bucket_name, path)
+                return "https://{0}.s3.amazonaws.com{1}/".format(bucket_name, value)
         else:
             return ''
 
@@ -59,14 +58,15 @@ class S3UploadWidget(widgets.TextInput):
         return self.build_attrs(attrs).get(key, default) if attrs else default
 
     def render(self, name, value, attrs=None, **kwargs):
-        file_name = os.path.basename(urlunquote_plus(value)) if value else ''
+        path = get_s3_path_from_url(value) if value else ''
+        file_name = os.path.basename(urlunquote_plus(path))
         tpl = os.path.join('s3upload', 's3upload-widget.tpl')
         output = render_to_string(tpl, {
             'policy_url': reverse('s3upload'),
             'element_id': self.get_attr(attrs, 'id'),
             'file_name': file_name,
             'dest': self.dest,
-            'file_url': self.get_file_url(value),
+            'file_url': self.get_file_url(path),
             'name': name,
             'element_id': self.get_attr(attrs, 'style'),
         })
