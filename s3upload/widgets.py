@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlunquote_plus
 from django.utils.safestring import mark_safe
 
-from .utils import get_signed_download_url
+from .utils import get_signed_download_url, get_s3_path_from_url
 
 
 class S3UploadWidget(widgets.TextInput):
@@ -40,17 +40,18 @@ class S3UploadWidget(widgets.TextInput):
 
     def get_file_url(self, value):
         if value:
+            path = get_s3_path_from_url(value)
             bucket_name = settings.S3UPLOAD_DESTINATIONS[self.dest].get(
                 'bucket', settings.AWS_STORAGE_BUCKET_NAME
             )
             if self.acl == 'private':
                 return get_signed_download_url(
-                    value,
+                    path,
                     bucket_name,
                 )
             else:
                 # Default to virtual-hosted–style URL
-                return "https://{0}.s3.amazonaws.com{1}".format(bucket_name, value)
+                return "https://{0}.s3.amazonaws.com{1}".format(bucket_name, path)
         else:
             return ''
 
