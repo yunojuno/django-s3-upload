@@ -150,7 +150,7 @@ S3UPLOAD_DESTINATIONS = {
     # Allow authenticated users to upload mp4's
     'videos': {
         'key': 'uploads/videos',
-        'auth': lambda u: u.is_authenticated(),
+        'auth': lambda u: u.is_authenticated,
         'allowed_types': ['video/mp4']
     },
 
