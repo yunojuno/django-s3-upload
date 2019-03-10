@@ -267,8 +267,8 @@ Visit `http://localhost:8000/admin <http://localhost:8000/admin>`__ to view the 
 
 
 
-.. |Travis Build Status| image:: https://api.travis-ci.org/yunojuno/django-s3upload.svg?branch=master
-   :target: https://travis-ci.org/yunojuno/django-s3upload
+.. |Travis Build Status| image:: https://travis-ci.org/yunojuno/django-s3-upload.svg?branch=master
+   :target: https://travis-ci.org/yunojuno/django-s3-upload
 .. |PyPI Version| image:: https://img.shields.io/pypi/pyversions/django-s3-upload.svg?maxAge=60
    :target: https://pypi.python.org/pypi/django-s3-upload
 .. |PyPI License| image:: https://img.shields.io/pypi/l/django-s3-upload.svg?maxAge=120
