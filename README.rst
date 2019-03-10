@@ -273,5 +273,5 @@ Visit `http://localhost:8000/admin <http://localhost:8000/admin>`__ to view the 
    :target: https://pypi.python.org/pypi/django-s3-upload
 .. |PyPI License| image:: https://img.shields.io/pypi/l/django-s3-upload.svg?maxAge=120
    :target: https://github.com/yunojuno/django-s3-upload/blob/master/LICENSE
-.. |PyPI latest| image:: https://img.shields.io/pypi/v/django-s3-upload.svg?maxAge=120
-   :target: https://pypi.python.org/pypi/django-stuff
+.. |PyPI latest| image:: https://img.shields.io/pypi/v/django-s3-upload.svg?maxAge=60
+   :target: https://pypi.python.org/pypi/django-s3-upload
