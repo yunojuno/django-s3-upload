@@ -1,22 +1,37 @@
+import codecs
 import os
-from setuptools import setup
 
-f = open(os.path.join(os.path.dirname(__file__), 'README.md'))
-readme = f.read()
-f.close()
+from setuptools import setup, find_packages, Command
+
+version = '0.2.1'
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+# Get the long description
+with codecs.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
+
+with codecs.open(os.path.join(here, 'requirements.txt')) as f:
+    install_requires = [line for line in f.readlines() if not line.startswith('#')]
+
+
+class VersionCommand(Command):
+    description = 'print library version'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        print(version)
+
 
 setup(
-    name='django-s3-upload',
-    version='0.2.1',
-    description=('Integrates direct client-side uploading to s3 with Django'),
-    long_description=readme,
     author="YunoJuno",
     author_email='code@yunojuno.com',
-    url='https://github.com/yunojuno/django-s3-upload',
-    packages=['s3upload'],
-    include_package_data=True,
-    install_requires=['django>=1.11', 'boto3'],
-    zip_safe=False,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -28,4 +43,15 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3.6',
     ],
+    cmdclass={'version': VersionCommand},
+    description='Integrates direct client-side uploading to s3 with Django',
+    include_package_data=True,
+    install_requires=install_requires,
+    keywords='aws s3 tools django',
+    license='MIT',
+    long_description=long_description,
+    name='django-s3-upload',
+    packages=find_packages(exclude=['docs', 'tests*']),
+    url='https://github.com/yunojuno/django-s3-upload',
+    version=version,
 )

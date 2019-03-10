@@ -1,0 +1,2 @@
+boto3
+django>=1.11
