@@ -10,7 +10,6 @@ script: tox
 
 jobs:
     include:
-        - { python: "3.7", env: TOXENV=django-checks }
         - { python: "3.7", env: TOXENV=py37-django22 }
         - { python: "3.7", env: TOXENV=py37-django30 }
         - { python: "3.7", env: TOXENV=py37-django31 }
