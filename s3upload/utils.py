@@ -5,7 +5,7 @@ import hmac
 import json
 from base64 import b64encode
 from datetime import datetime, timedelta
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 from urllib.parse import unquote, urlparse
 
 import boto3
@@ -142,7 +142,9 @@ def get_s3_path_from_url(
 
 
 def get_signed_download_url(
-    key: str, bucket_name: str = settings.AWS_STORAGE_BUCKET_NAME, ttl: int = 60,
+    key: str,
+    bucket_name: str = settings.AWS_STORAGE_BUCKET_NAME,
+    ttl: int = 60,
 ) -> str:
     s3 = boto3.client(
         "s3",
