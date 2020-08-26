@@ -12,3 +12,5 @@ example/example/settings-test.py
 
 s3upload/src/node_modules/
 example/static/
+poetry.lock
+tests/static
