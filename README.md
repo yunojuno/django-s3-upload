@@ -155,7 +155,7 @@ S3UPLOAD_DESTINATIONS = {
 
 ```python
 urlpatterns = [
-    url(r'^s3upload/', include('s3upload.urls')),
+    path(r'^s3upload/', include('s3upload.urls')),
 ]
 ```
 
