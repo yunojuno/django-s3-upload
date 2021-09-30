@@ -5,7 +5,7 @@ import hmac
 import json
 from base64 import b64encode
 from datetime import datetime, timedelta
-from typing import Any, Dict, Optional
+from typing import Any
 from urllib.parse import unquote, urlparse
 
 import boto3
@@ -17,13 +17,13 @@ def create_upload_data(  # noqa: C901
     content_type: str,
     key: str,
     acl: str,
-    bucket: Optional[str] = None,
-    cache_control: Optional[str] = None,
-    content_disposition: Optional[str] = None,
-    content_length_range: Optional[str] = None,
-    server_side_encryption: Optional[str] = None,
-    token: Optional[str] = None,
-) -> Dict[str, Any]:
+    bucket: str | None = None,
+    cache_control: str | None = None,
+    content_disposition: str | None = None,
+    content_length_range: str | None = None,
+    server_side_encryption: str | None = None,
+    token: str | None = None,
+) -> dict[str, Any]:
     """Generate AWS upload payload."""
     access_key = settings.AWS_ACCESS_KEY_ID
     secret_access_key = settings.AWS_SECRET_ACCESS_KEY
@@ -39,7 +39,7 @@ def create_upload_data(  # noqa: C901
     now_date = datetime.utcnow().strftime("%Y%m%dT%H%M%S000Z")
     raw_date = datetime.utcnow().strftime("%Y%m%d")
 
-    policy_dict: Dict[str, Any] = {
+    policy_dict: dict[str, Any] = {
         "expiration": expires,
         "conditions": [
             {"bucket": bucket},
@@ -95,7 +95,6 @@ def create_upload_data(  # noqa: C901
     ).digest()
 
     signature = hmac.new(signing_key, msg=policy, digestmod=hashlib.sha256).hexdigest()
-    print("policy", policy.decode())
     return_dict = {
         "policy": policy.decode(),  # decode to make it JSON serializable
         "success_action_status": 201,

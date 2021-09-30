@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Optional, Tuple
+from typing import Any
 
 from django.conf import settings
 from django.db.models import Field, Model
@@ -10,14 +10,14 @@ from .widgets import S3UploadWidget
 
 
 class S3UploadField(Field):
-    def __init__(self, dest: Optional[str] = None, *args: Any, **kwargs: Any) -> None:
+    def __init__(self, dest: str | None = None, *args: Any, **kwargs: Any) -> None:
         if not dest:
             raise ValueError("S3UploadField must be initialised with a destination")
         self.dest = dest
         self.widget = S3UploadWidget(self.dest)
         super(S3UploadField, self).__init__(*args, **kwargs)
 
-    def deconstruct(self) -> Tuple[str, str, Any, Any]:
+    def deconstruct(self) -> tuple[str, str, Any, Any]:
         name, path, args, kwargs = super(S3UploadField, self).deconstruct()
         kwargs["dest"] = self.dest
         return name, path, args, kwargs

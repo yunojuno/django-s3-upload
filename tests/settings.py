@@ -1,3 +1,4 @@
+import uuid
 from os import getenv, path
 
 DEBUG = True
@@ -48,7 +49,7 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = path.join(PROJECT_DIR, "static")
 
-SECRET_KEY = "secret"
+SECRET_KEY = "secret"  # noqa: S105
 
 LOGGING = {
     "version": 1,
@@ -73,12 +74,11 @@ LOGGING = {
 
 ROOT_URLCONF = "tests.urls"
 
+
 # used by the example app
 def create_filename(filename):
-    import uuid
-
     ext = filename.split(".")[-1]
-    filename = "%s.%s" % (uuid.uuid4().hex, ext)
+    filename = "{}.{}".format(uuid.uuid4().hex, ext)
     return path.join("custom", filename)
 
 

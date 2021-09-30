@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, Optional
+from typing import Any
 from urllib.parse import unquote_plus as urlunquote_plus
 
 from django.conf import settings
@@ -45,21 +45,17 @@ class S3UploadWidget(widgets.TextInput):
                 return get_signed_download_url(value, bucket_name)
             else:
                 # Default to virtual-hosted–style URL
-                return "https://{0}.s3.amazonaws.com/{1}".format(bucket_name, value)
+                return "https://{}.s3.amazonaws.com/{}".format(bucket_name, value)
         else:
             return ""
 
     def get_attr(
-        self, attrs: Optional[Dict[str, Any]], key: str, default: str = ""
+        self, attrs: dict[str, Any] | None, key: str, default: str = ""
     ) -> str:
         return self.build_attrs(attrs).get(key, default) if attrs else default
 
     def render(
-        self,
-        name: str,
-        value: str,
-        attrs: Optional[Dict[str, Any]] = None,
-        **kwargs: Any
+        self, name: str, value: str, attrs: dict[str, Any] | None = None, **kwargs: Any
     ) -> str:
         path = get_s3_path_from_url(value) if value else ""
         file_name = os.path.basename(urlunquote_plus(path))
@@ -76,4 +72,6 @@ class S3UploadWidget(widgets.TextInput):
                 "style": self.get_attr(attrs, "style"),
             },
         )
-        return mark_safe(output)
+        # TODO: review use of mark_safe - will the template render
+        # cover cases of bad filenames?
+        return mark_safe(output)  # noqa: S703, S308

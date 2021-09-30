@@ -59,7 +59,7 @@ def get_upload_params(request: HttpRequest) -> JsonResponse:  # noqa: C901
     elif key == "/":
         key = filename
     else:
-        key = "{0}/{1}".format(key, filename)
+        key = "{}/{}".format(key, filename)
 
     aws_payload = create_upload_data(
         content_type=content_type,
