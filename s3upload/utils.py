@@ -32,7 +32,8 @@ def create_upload_data(  # noqa: C901
     # see https://docs.aws.amazon.com/AmazonS3/latest/dev/\
     #   UsingBucket.html#access-bucket-intro
     # virtual host style endpoints are now the default.
-    bucket_url = getattr(settings, "S3UPLOAD_BUCKET_ENDPOINT_URL", f"https://{bucket}.s3.{region}.amazonaws.com")
+    bucket_endpoint = getattr(settings, "S3UPLOAD_BUCKET_ENDPOINT", "https://{bucket}.s3.{region}.amazonaws.com")
+    bucket_url = bucket_endpoint.format(bucket=bucket, region=region)
     expires_in = datetime.utcnow() + timedelta(seconds=60 * 5)
     expires = expires_in.strftime("%Y-%m-%dT%H:%M:%S.000Z")
     now_date = datetime.utcnow().strftime("%Y%m%dT%H%M%S000Z")
