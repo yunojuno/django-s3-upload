@@ -45,7 +45,11 @@ class S3UploadWidget(widgets.TextInput):
                 return get_signed_download_url(value, bucket_name)
             else:
                 # Default to virtual-hosted–style URL
-                bucket_endpoint = getattr(settings, 'S3UPLOAD_BUCKET_ENDPOINT', "https://{bucket}.s3.amazonaws.com")
+                bucket_endpoint = getattr(
+                    settings,
+                    "S3UPLOAD_BUCKET_ENDPOINT",
+                    "https://{bucket}.s3.amazonaws.com",
+                )
                 bucket_url = bucket_endpoint.format(bucket=bucket_name)
                 return "{}/{}".format(bucket_url, value)
         else:
