@@ -29,15 +29,7 @@ def create_upload_data(  # noqa: C901
     secret_access_key = settings.AWS_SECRET_ACCESS_KEY
     bucket = bucket or settings.AWS_STORAGE_BUCKET_NAME
     region = settings.S3UPLOAD_REGION
-    # see https://docs.aws.amazon.com/AmazonS3/latest/dev/\
-    #   UsingBucket.html#access-bucket-intro
-    # virtual host style endpoints are now the default.
-    bucket_endpoint = getattr(
-        settings,
-        "S3UPLOAD_BUCKET_ENDPOINT",
-        "https://{bucket}.s3.{region}.amazonaws.com",
-    )
-    bucket_url = bucket_endpoint.format(bucket=bucket, region=region)
+    bucket_url = get_bucket_endpoint_url(bucket, region)
     expires_in = datetime.utcnow() + timedelta(seconds=60 * 5)
     expires = expires_in.strftime("%Y-%m-%dT%H:%M:%S.000Z")
     now_date = datetime.utcnow().strftime("%Y%m%dT%H%M%S000Z")
@@ -146,9 +138,10 @@ def get_s3_path_from_url(
 
 def get_signed_download_url(
     key: str,
-    bucket_name: str = settings.AWS_STORAGE_BUCKET_NAME,
+    bucket_name: str | None = None,
     ttl: int = 60,
 ) -> str:
+    bucket_name = bucket_name or settings.AWS_STORAGE_BUCKET_NAME
     s3 = boto3.client(
         "s3",
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
@@ -158,3 +151,21 @@ def get_signed_download_url(
         "get_object", Params={"Bucket": bucket_name, "Key": key}, ExpiresIn=ttl
     )
     return download_url
+
+
+# virtual-hosted-style URLs are now the default
+# Example: https://bucket-name.s3.Region.amazonaws.com/key name
+# See: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html
+def get_bucket_endpoint_url(
+    bucket_name: str | None = None,
+    region: str | None = None,
+    default: str = "https://{bucket}.s3.{region}.amazonaws.com",
+) -> str:
+    bucket_name = bucket_name or settings.AWS_STORAGE_BUCKET_NAME
+    region = region or settings.S3UPLOAD_REGION
+    bucket_endpoint = getattr(
+        settings,
+        "S3UPLOAD_BUCKET_ENDPOINT",
+        default,
+    )
+    return bucket_endpoint.format(bucket=bucket_name, region=region)
