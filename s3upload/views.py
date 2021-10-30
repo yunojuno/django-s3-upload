@@ -78,7 +78,7 @@ def get_upload_params(request: HttpRequest) -> JsonResponse:  # noqa: C901
     if acl == "private":
         url = get_signed_download_url(
             key=key.replace("${filename}", filename),
-            bucket_name=bucket or settings.AWS_STORAGE_BUCKET_NAME,
+            bucket_name=bucket,
             ttl=int(5 * 60),  # 5 mins
         )
 

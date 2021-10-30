@@ -118,6 +118,11 @@ AWS_STORAGE_BUCKET_NAME = ''
 # http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
 S3UPLOAD_REGION = 'us-east-1'
 
+# [Optional] Custom bucket endpoint url, with following keys (also optional):
+# region - region of your bucket
+# bucket - your bucket name
+# S3UPLOAD_BUCKET_ENDPOINT = 'https://{region}.non-amazon-s3-url.com/{bucket}'
+
 # Destinations, with the following keys:
 #
 # key [required] Where to upload the file to, can be either:
