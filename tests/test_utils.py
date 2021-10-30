@@ -1,6 +1,6 @@
 import pytest
 
-from s3upload.utils import get_s3_path_from_url, get_bucket_endpoint_url
+from s3upload.utils import get_bucket_endpoint_url, get_s3_path_from_url
 
 TEST_BUCKET = "test-bucket-name"
 TEST_KEY = "folder1/folder2/file1.json"
@@ -26,13 +26,25 @@ def test_get_s3_path_from_url(url: str) -> None:
     "url,expected",
     [
         (None, f"https://{TEST_BUCKET}.s3.{TEST_REGION}.amazonaws.com"),
-        ("https://{bucket}.s3.{region}.amazonaws.com", f"https://{TEST_BUCKET}.s3.{TEST_REGION}.amazonaws.com"),
-        ("https://s3.{region}.amazonaws.com", f"https://s3.{TEST_REGION}.amazonaws.com"),
-        ("https://{bucket}.s3.amazonaws.com", f"https://{TEST_BUCKET}.s3.amazonaws.com"),
-    ]
+        (
+            "https://{bucket}.s3.{region}.amazonaws.com",
+            f"https://{TEST_BUCKET}.s3.{TEST_REGION}.amazonaws.com",
+        ),
+        (
+            "https://s3.{region}.amazonaws.com",
+            f"https://s3.{TEST_REGION}.amazonaws.com",
+        ),
+        (
+            "https://{bucket}.s3.amazonaws.com",
+            f"https://{TEST_BUCKET}.s3.amazonaws.com",
+        ),
+    ],
 )
 def test_get_bucket_endpoint_url(url: str, expected: str) -> None:
     kwargs = {}
     if url:
         kwargs["default"] = url
-    assert get_bucket_endpoint_url(bucket_name=TEST_BUCKET, region=TEST_REGION, **kwargs) == expected
+    assert (
+        get_bucket_endpoint_url(bucket_name=TEST_BUCKET, region=TEST_REGION, **kwargs)
+        == expected
+    )
