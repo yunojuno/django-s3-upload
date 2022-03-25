@@ -143,6 +143,7 @@ def get_signed_download_url(
 ) -> str:
     bucket_name = bucket_name or settings.AWS_STORAGE_BUCKET_NAME
     bucket_endpoint = get_bucket_endpoint_url(bucket_name)
+
     s3 = boto3.client(
         "s3",
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
