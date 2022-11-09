@@ -4,7 +4,7 @@ django-s3-upload
 Compatibility
 -------------
 
-This library now supports Python3 and Django v1.11 and above only.
+This library now supports Python 3.8 and Django v3.2 and above only.
 
 
 [![Build Status](https://travis-ci.org/yunojuno/django-s3upload.svg?branch=master)](https://travis-ci.org/yunojuno/django-s3upload)

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-s3-upload"
-version = "0.4"
+version = "0.5"
 description = "Integrates direct client-side uploading to s3 with Django."
 authors = ["YunoJuno <code@yunojuno.com>"]
 license = "MIT"
@@ -13,27 +13,26 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Web Environment",
     "Framework :: Django",
-    "Framework :: Django :: 2.2",
-    "Framework :: Django :: 3.0",
-    "Framework :: Django :: 3.1",
     "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 packages = [{ include = "s3upload" }]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-django = "^2.2 || ^3.0 || ^4.0"
+python = "^3.8"
+django = "^3.2 || ^4.0"
 boto3 = "^1.14"
 
 [tool.poetry.dev-dependencies]
-black = {version = "*", allow-prereleases = true}
+black = "*"
 coverage = "*"
 flake8 = "*"
 flake8-bandit = "*"
