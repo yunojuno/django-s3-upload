@@ -7,7 +7,6 @@ import s3upload.fields
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []

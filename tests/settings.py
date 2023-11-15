@@ -76,7 +76,7 @@ ROOT_URLCONF = "tests.urls"
 
 
 # used by the example app
-def create_filename(filename):
+def create_filename(filename: str) -> str:
     ext = filename.split(".")[-1]
     filename = "{}.{}".format(uuid.uuid4().hex, ext)
     return path.join("custom", filename)

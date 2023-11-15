@@ -12,7 +12,6 @@ from .utils import create_upload_data, get_signed_download_url
 
 @require_POST
 def get_upload_params(request: HttpRequest) -> JsonResponse:  # noqa: C901
-
     content_type = request.POST["type"]
     filename = get_valid_filename(request.POST["name"])
     dest = settings.S3UPLOAD_DESTINATIONS[request.POST["dest"]]
