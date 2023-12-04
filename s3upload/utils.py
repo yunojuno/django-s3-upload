@@ -142,10 +142,13 @@ def get_signed_download_url(
     ttl: int = 60,
 ) -> str:
     bucket_name = bucket_name or settings.AWS_STORAGE_BUCKET_NAME
+    bucket_endpoint = get_bucket_endpoint_url(bucket_name)
+
     s3 = boto3.client(
         "s3",
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        endpoint_url=bucket_endpoint,
     )
     download_url = s3.generate_presigned_url(
         "get_object", Params={"Bucket": bucket_name, "Key": key}, ExpiresIn=ttl
