@@ -690,12 +690,19 @@ function initHandler(event) {
 document.addEventListener('DOMContentLoaded', initHandler);
 
 // Support inline
-document.addEventListener('DOMNodeInserted', function(event) {
-    if(event.target.tagName) {
-        var elements = event.target.querySelectorAll('.s3upload');
-        addHandlers(elements)
-    }
+var observer = new MutationObserver(function(mutationsList) {
+    mutationsList.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                var elements = node.querySelectorAll('.s3upload');
+                addHandlers(elements);
+            }
+        });
+    });
 });
+
+// Start observing the document
+observer.observe(document.body, { childList: true, subtree: true });
 
 // custom event listener for use in async init
 document.addEventListener('s3upload:init', initHandler);
