@@ -689,20 +689,21 @@ function initHandler(event) {
 // default global init on document ready
 document.addEventListener('DOMContentLoaded', initHandler);
 
-// Support inline
-var observer = new MutationObserver(function(mutationsList) {
-    mutationsList.forEach(function(mutation) {
-        mutation.addedNodes.forEach(function(node) {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-                var elements = node.querySelectorAll('.s3upload');
-                addHandlers(elements);
-            }
+document.addEventListener("DOMContentLoaded", function() {
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    const elements = node.querySelectorAll(".s3upload");
+                    addHandlers(elements);
+                }
+            });
         });
     });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 });
 
-// Start observing the document
-observer.observe(document.body, { childList: true, subtree: true });
 
 // custom event listener for use in async init
 document.addEventListener('s3upload:init', initHandler);
