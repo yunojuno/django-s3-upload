@@ -77,4 +77,4 @@ class S3UploadWidget(widgets.TextInput):
         )
         # TODO: review use of mark_safe - will the template render
         # cover cases of bad filenames?
-        return mark_safe(output)  # noqa: S703, S308
+        return mark_safe(output)  # noqa: S308

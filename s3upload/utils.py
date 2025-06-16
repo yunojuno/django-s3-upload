@@ -4,7 +4,7 @@ import hashlib
 import hmac
 import json
 from base64 import b64encode
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import unquote, urlparse
 
@@ -30,10 +30,10 @@ def create_upload_data(  # noqa: C901
     bucket = bucket or settings.AWS_STORAGE_BUCKET_NAME
     region = settings.S3UPLOAD_REGION
     bucket_url = get_bucket_endpoint_url(bucket, region)
-    expires_in = datetime.utcnow() + timedelta(seconds=60 * 5)
+    expires_in = datetime.now(timezone.utc) + timedelta(seconds=60 * 5)
     expires = expires_in.strftime("%Y-%m-%dT%H:%M:%S.000Z")
-    now_date = datetime.utcnow().strftime("%Y%m%dT%H%M%S000Z")
-    raw_date = datetime.utcnow().strftime("%Y%m%d")
+    now_date = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S000Z")
+    raw_date = datetime.now(timezone.utc).strftime("%Y%m%d")
 
     policy_dict: dict[str, Any] = {
         "expiration": expires,
