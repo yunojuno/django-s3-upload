@@ -1,33 +1,32 @@
-django-s3-upload
-================
+# django-s3-upload
 
-Compatibility
--------------
+## Compatibility
 
-This library now supports Python3 and Django v1.11 and above only.
-
+This library supports Python 3.10+ and Django 4.2+ only.
 
 [![Build Status](https://travis-ci.org/yunojuno/django-s3upload.svg?branch=master)](https://travis-ci.org/yunojuno/django-s3upload)
 
-**Allows direct uploading of a file from the browser to AWS S3 via a file input field rendered by Django.**
+**Allows direct uploading of a file from the browser to AWS S3 via a file input field rendered by
+Django.**
 
 The uploaded file's URL is then saveable as the value of that field in the database.
 
-This avoids the problem of uploads timing out when they go via a web server before being handed off to S3.
+This avoids the problem of uploads timing out when they go via a web server before being handed off
+to S3.
 
 Features include:
 
-* displaying a progress bar
-* support for ACLs (eg, private uploads)
-* support for encrypted-at-rest S3 buckets
-* mimetype and file extension whitelisting
-* specifying different bucket destinations on a per-field basis
+-   displaying a progress bar
+-   support for ACLs (eg, private uploads)
+-   support for encrypted-at-rest S3 buckets
+-   mimetype and file extension whitelisting
+-   specifying different bucket destinations on a per-field basis
 
 ## Installation
 
 Install with Pip:
 
-```pip install django-s3-upload```
+`pip install django-s3-upload`
 
 ## AWS Setup
 
@@ -38,8 +37,8 @@ You have two options of providing access to AWS resources:
 1. Add credentials of an IAM user to your Django settings (see below)
 2. Use the EC2 instance profile and its attached IAM role
 
-Whether you are using an IAM user or a role, there needs to be an IAM policy
-in effect that grants permission to upload to S3:
+Whether you are using an IAM user or a role, there needs to be an IAM policy in effect that grants
+permission to upload to S3:
 
 ```json
 "Statement": [
@@ -51,8 +50,8 @@ in effect that grants permission to upload to S3:
 ]
 ```
 
-If the instance profile is to be used, the IAM role needs to have a
-Trust Relationship configuration applied:
+If the instance profile is to be used, the IAM role needs to have a Trust Relationship configuration
+applied:
 
 ```json
 "Statement": [
@@ -66,10 +65,9 @@ Trust Relationship configuration applied:
 ]
 ```
 
-Note that in order to use the EC2 instance profile, django-s3-upload needs
-to query the EC2 instance metadata using utility functions from the
-[botocore] [] package. You already have `botocore` installed if `boto3`
-is a dependency of your project.
+Note that in order to use the EC2 instance profile, django-s3-upload needs to query the EC2 instance
+metadata using utility functions from the [botocore] [] package. You already have `botocore`
+installed if `boto3` is a dependency of your project.
 
 ### S3 CORS
 
@@ -164,7 +162,7 @@ urlpatterns = [
 ]
 ```
 
-Run ```python manage.py collectstatic``` if required.
+Run `python manage.py collectstatic` if required.
 
 ## Use in Django admin
 
@@ -190,7 +188,8 @@ class S3UploadForm(forms.Form):
     images = forms.URLField(widget=S3UploadWidget(dest='example_destination'))
 ```
 
-__*Optional.__ You can modify the HTML of the widget by overiding template __s3upload/templates/s3upload-widget.tpl__
+**\*Optional.** You can modify the HTML of the widget by overiding template
+**s3upload/templates/s3upload-widget.tpl**
 
 ### views.py
 
@@ -207,23 +206,21 @@ class MyView(FormView):
 
 ```html
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>s3upload</title>
-    {{ form.media }}
-</head>
-<body>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-    </form>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <title>s3upload</title>
+        {{ form.media }}
+    </head>
+    <body>
+        <form action="" method="post">{% csrf_token %} {{ form.as_p }}</form>
+    </body>
 </html>
 ```
-
 
 ## Examples
 
 Examples of both approaches can be found in the examples folder. To run them:
+
 ```shell
 $ git clone git@github.com:yunojuno/django-s3-upload.git
 $ cd django-s3-upload
@@ -237,6 +234,7 @@ export S3UPLOAD_REGION='...'    # e.g. 'eu-west-1'
 $ docker-compose up
 ```
 
-Visit ```http://localhost:8000/admin``` to view the admin widget and ```http://localhost:8000/form``` to view the custom form widget.
+Visit `http://localhost:8000/admin` to view the admin widget and `http://localhost:8000/form` to
+view the custom form widget.
 
 [botocore]: https://github.com/boto/botocore
