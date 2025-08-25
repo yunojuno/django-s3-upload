@@ -181,7 +181,8 @@ class WidgetTests(TestCase):
                 "acl": "private",
                 "bucket": "test-bucket",
             }
-        }
+        },
+        S3UPLOAD_REGION="us",
     )
     def test_check_signed_url(self) -> None:
         data = {"dest": "misc", "name": "image.jpg", "type": "image/jpeg"}
@@ -190,7 +191,7 @@ class WidgetTests(TestCase):
         parsed_url = urlparse(response_dict["private_access_url"])
         parsed_qs = parse_qs(parsed_url.query)
         self.assertEqual(parsed_url.scheme, "https")
-        self.assertEqual(parsed_url.netloc, "test-bucket.s3.amazonaws.com")
+        self.assertEqual(parsed_url.netloc, "test-bucket.s3.us.amazonaws.com")
         self.assertTrue("Signature" in parsed_qs)
         self.assertTrue("Expires" in parsed_qs)
 

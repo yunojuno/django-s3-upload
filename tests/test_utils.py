@@ -1,4 +1,7 @@
+from urllib.parse import urlparse
+
 import pytest
+from django.test import override_settings
 
 from s3upload.utils import get_bucket_endpoint_url, get_s3_path_from_url
 
@@ -48,3 +51,13 @@ def test_get_bucket_endpoint_url(url: str, expected: str) -> None:
         get_bucket_endpoint_url(bucket_name=TEST_BUCKET, region=TEST_REGION, **kwargs)
         == expected
     )
+
+
+@override_settings(
+    S3UPLOAD_REGION=TEST_REGION,
+)
+def test_get_signed_download_url() -> None:
+    presigned_url = get_signed_download_url(key=TEST_KEY, bucket_name=TEST_BUCKET)
+    parsed_url = urlparse(presigned_url)
+    assert parsed_url.scheme == "https"
+    assert parsed_url.netloc == f"{TEST_BUCKET}.s3.{TEST_REGION}.amazonaws.com"
