@@ -181,7 +181,8 @@ class WidgetTests(TestCase):
                 "acl": "private",
                 "bucket": "test-bucket",
             }
-        }
+        },
+        S3UPLOAD_REGION="eu-west-1",
     )
     def test_check_signed_url(self) -> None:
         data = {"dest": "misc", "name": "image.jpg", "type": "image/jpeg"}
@@ -191,8 +192,8 @@ class WidgetTests(TestCase):
         parsed_qs = parse_qs(parsed_url.query)
         self.assertEqual(parsed_url.scheme, "https")
         self.assertEqual(parsed_url.netloc, "test-bucket.s3.amazonaws.com")
-        self.assertTrue("Signature" in parsed_qs)
-        self.assertTrue("Expires" in parsed_qs)
+        self.assertTrue("X-Amz-Signature" in parsed_qs)
+        self.assertTrue("X-Amz-Expires" in parsed_qs)
 
     def test_content_length_range(self) -> None:
         # Content_length_range setting is always sent as part of policy.
