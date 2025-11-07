@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-s3-upload"
-version = "1.1.0"
+version = "1.1.1"
 description = "Integrates direct client-side uploading to s3 with Django."
 authors = ["YunoJuno <code@yunojuno.com>"]
 license = "MIT"
