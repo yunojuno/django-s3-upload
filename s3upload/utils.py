@@ -9,6 +9,7 @@ from typing import Any
 from urllib.parse import unquote, urlparse
 
 import boto3
+from botocore.config import Config
 from django.conf import settings
 
 
@@ -146,6 +147,8 @@ def get_signed_download_url(
         "s3",
         aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        config=Config(signature_version="s3v4"),
+        region_name=settings.S3UPLOAD_REGION,
     )
     download_url = s3.generate_presigned_url(
         "get_object", Params={"Bucket": bucket_name, "Key": key}, ExpiresIn=ttl
