@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-s3-upload"
-version = "1.1.1"
+version = "1.2.0"
 description = "Integrates direct client-side uploading to s3 with Django."
 authors = ["YunoJuno <code@yunojuno.com>"]
 license = "MIT"
@@ -12,22 +12,19 @@ documentation = "https://github.com/yunojuno/django-s3-upload"
 classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django",
-    "Framework :: Django :: 4.2",
-    "Framework :: Django :: 5.0",
-    "Framework :: Django :: 5.1",
     "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 packages = [{ include = "s3upload" }]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-django = "^4.2 || ^5.0"
+python = "^3.12"
+django = ">=5.2,<7.0"
 boto3 = "^1.14"
 
 [tool.poetry.group.test.dependencies]

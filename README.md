@@ -2,7 +2,7 @@
 
 ## Compatibility
 
-This library supports Python 3.10+ and Django 4.2+ only.
+This library supports Python 3.12+ and Django 5.2-6.0.
 
 [![Build Status](https://travis-ci.org/yunojuno/django-s3upload.svg?branch=master)](https://travis-ci.org/yunojuno/django-s3upload)
 
