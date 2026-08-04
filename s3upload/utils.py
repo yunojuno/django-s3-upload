@@ -141,6 +141,7 @@ def get_signed_download_url(
     key: str,
     bucket_name: str | None = None,
     ttl: int = 60,
+    content_disposition: str | None = None,
 ) -> str:
     bucket_name = bucket_name or settings.AWS_STORAGE_BUCKET_NAME
     s3 = boto3.client(
@@ -150,8 +151,11 @@ def get_signed_download_url(
         config=Config(signature_version="s3v4"),
         region_name=settings.S3UPLOAD_REGION,
     )
+    params: dict[str, str] = {"Bucket": bucket_name, "Key": key}
+    if content_disposition:
+        params["ResponseContentDisposition"] = content_disposition
     download_url = s3.generate_presigned_url(
-        "get_object", Params={"Bucket": bucket_name, "Key": key}, ExpiresIn=ttl
+        "get_object", Params=params, ExpiresIn=ttl
     )
     return download_url
 
