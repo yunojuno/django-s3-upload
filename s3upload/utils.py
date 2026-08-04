@@ -141,6 +141,7 @@ def get_signed_download_url(
     key: str,
     bucket_name: str | None = None,
     ttl: int = 60,
+    *,
     content_disposition: str | None = None,
 ) -> str:
     bucket_name = bucket_name or settings.AWS_STORAGE_BUCKET_NAME
