@@ -154,9 +154,7 @@ def get_signed_download_url(
     params: dict[str, str] = {"Bucket": bucket_name, "Key": key}
     if content_disposition:
         params["ResponseContentDisposition"] = content_disposition
-    download_url = s3.generate_presigned_url(
-        "get_object", Params=params, ExpiresIn=ttl
-    )
+    download_url = s3.generate_presigned_url("get_object", Params=params, ExpiresIn=ttl)
     return download_url
 
 
