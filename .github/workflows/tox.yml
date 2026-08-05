@@ -63,9 +63,6 @@ jobs:
                 python: ["3.12", "3.13"]
                 django: ["52", "60", "main"]
 
-        env:
-            TOXENV: django${{ matrix.django }}-py${{ matrix.python }}
-
         steps:
             - name: Check out the repository
               uses: actions/checkout@v4
@@ -74,6 +71,9 @@ jobs:
               uses: actions/setup-python@v4
               with:
                   python-version: ${{ matrix.python }}
+
+            - name: Set TOXENV
+              run: echo "TOXENV=django${{ matrix.django }}-py$(echo '${{ matrix.python }}' | tr -d '.')" >> $GITHUB_ENV
 
             - name: Install and run tox
               run: |
